@@ -6,6 +6,10 @@
     Member loginUser = (Member)session.getAttribute("loginUser");
     // 로그인 시도 전 menubar.jsp로딩시 : null
     // 로그인 성공 후 menubar.jsp로딩시 : 로그인 성공한 회원의 정보
+    
+    String alertMsg = (String)session.getAttribute("alertMsg");
+    //서비스 요청 전 : null
+    //서비스 요청 후 : alert띄워줄 메세지 문구
 %>
 <!DOCTYPE html>
 <html>
@@ -55,6 +59,12 @@
  </style>
 </head>
 <body>
+	<% if(alertMsg != null){ %>
+		<script>
+			alert("<%=alertMsg%>");
+		</script>
+		<% session.removeAttribute("alertMsg"); %>
+	<% } %>
     <h1 align="center">Welcome KH World</h1>
     <div class="login-area">
         <% if(loginUser == null) { %>
