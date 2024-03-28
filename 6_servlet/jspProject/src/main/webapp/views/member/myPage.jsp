@@ -38,8 +38,8 @@
             <table>
                 <tr>
                     <td>* 아이디</td>
-                    <td><input type="text" name="userId" maxlength="12" value="<%=userId %>" required></td>
-                    <td><button type="button">중복확인</button></td>
+                    <td><input type="text" name="userId" maxlength="12" value="<%=userId %>" readonly></td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td>* 이름</td>
@@ -97,9 +97,11 @@
             <br><br>
 
             <div align="center">
-                <button type="submit">정보변경</button>
-                <button>비밀번호변경</button>
-                <button>회원탈퇴</button>
+                <button type="submit" class="btn btn-sm btn-secondary">정보변경</button>
+                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#update-pwd-modal">
+				  비밀번호변경
+				</button>
+                <button type="button" class="btn btn-sm btn-danger">회원탈퇴</button>
             </div>
         </form>
     </div>
@@ -115,5 +117,67 @@
             }
         }
     </script>
+    
+    
+
+	
+	<!-- 비밀번호 변경 modal-->
+	<div class="modal" id="update-pwd-modal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	
+	      <!-- Modal Header -->
+	      <div class="modal-header">
+	        <h4 class="modal-title">비밀번호 변경</h4>
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      </div>
+	
+	      <!-- Modal body -->
+	      <div class="modal-body" align="center">
+	        <form action="<%=contextPath%>/updatePwd.me" method="POST">
+                <input type="hidden" name="userId" value="<%=userId%>" >
+                <table>
+                    <tr>
+                        <td>현재 비밀번호</td>
+                        <td><input type="password" name="userPwd" required></td>
+                    </tr>
+                    <tr>
+                        <td>변경할 비밀번호</td>
+                        <td><input type="password" name="updatePwd" required></td>
+                    </tr>
+                    <tr>
+                        <td>변경할 비밀번호 확인</td>
+                        <td><input type="password" name="checkPwd" required></td>
+                    </tr>
+                </table>
+                <br>
+                <button id="edit-pwd-btn" type="submit" class="btn btn-sm btn-secondary">
+                    비밀번호 변경
+                </button>
+            </form>
+            <script>
+                document.getElementById("edit-pwd-btn").onclick = function(){
+                    const updatePwd = document.querySelector("input[name=updatePwd]").value;
+                    const checkPwd = document.querySelector("input[name=checkPwd]").value;
+                    
+                    if(updatePwd !== checkPwd) {
+                        alert("비밀번호를 확인해주세요.");
+                        return false;
+                    }
+                  
+                    // if($("input[name=updatePwd]").val() !== $("input[name=checkPwd]").val()){
+
+                    // }
+                }
+            </script>
+	      </div>
+	
+	     
+	    </div>
+	  </div>
+	</div>
+    
+    
+    
 </body>
 </html>

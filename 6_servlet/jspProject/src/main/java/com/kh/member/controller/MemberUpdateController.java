@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kh.member.model.vo.Member;
 import com.kh.member.service.MemberService;
@@ -58,7 +59,12 @@ public class MemberUpdateController extends HttpServlet {
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			
 		} else { // 성공
+			HttpSession session = request.getSession();
+			session.setAttribute("loginUser", updateMem);
+			session.setAttribute("alertMsg", "성공적으로 수정하였습니다.");
 			
+			//url 재요청 => 마이페이지 포워딩(/kh/myPage.me)
+			response.sendRedirect(request.getContextPath() + "/myPage.me");
 		}
 	}
 
