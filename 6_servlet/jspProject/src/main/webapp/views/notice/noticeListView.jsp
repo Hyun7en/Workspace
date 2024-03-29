@@ -60,7 +60,7 @@
                 <% } else {%>
                     <!--공지사항이 있을 경우-->
                     <% for(Notice n : list) { %>
-                        <tr>
+                        <tr >
                             <td><%=n.getNoticeNo()%></td>
                             <td><%=n.getNoticeTitle()%></td>
                             <td><%=n.getNoticeWriter()%></td>
@@ -72,5 +72,27 @@
             </tbody>
         </table>
     </div>
+    
+    <script>
+    	// const trList = document.querySelectorAll(".list-area > tbody > tr");
+        
+        // for(const tr of trList) {
+        //     tr.onclick = function(ev){
+        //         //url /kh/detaill.no
+        //         const noticeNo = this.children[0].innerText;
+
+        //         console.log(noticeNo)
+
+        //         location.href = "<%=contextPath%>/detail.no?num=" + noticeNo;
+        //     }
+        // }
+
+        $(function(){
+            $(".list-area > tbody > tr").click(function(){
+                const noticeNo = $(this).children().eq(0).text();
+                location.href = "<%=contextPath%>/detail.no?num=" + noticeNo;
+            })
+        })
+    </script>
 </body>
 </html>
