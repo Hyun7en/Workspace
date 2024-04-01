@@ -50,4 +50,46 @@ public class NoticeService {
 		close(conn);
 		return n;
 	}
+	
+	public Notice selectNotice(int noticeNo) {
+		Connection conn = getConnection();
+		
+		Notice n = new NoticeDao().selectNotice(conn, noticeNo);
+		
+		close(conn);
+		return n;
+	}
+	
+	//리턴이 뭘로될까? 
+	public int updateNotice(Notice n) {
+		Connection conn = getConnection();
+		int result = new NoticeDao().updateNotice(conn, n);
+		
+		//트랜잭션처리 필요한 경우 
+		// insert, update, delete
+		if (result > 0) { 
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
+	
+	public int deleteNotice(int noticeNo) {
+		Connection conn = getConnection();
+		int result = new NoticeDao().deleteNotice(conn, noticeNo);
+		
+		if (result > 0) { 
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
 }
