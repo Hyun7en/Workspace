@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kh.member.service.MemberService;
 
@@ -40,10 +41,25 @@ public class MemberDeleteController extends HttpServlet {
 		
 		//서비스 -> deleteMember();
 		
+		HttpSession session = request.getSession();
 		//성공시 -> session에 login정보 삭제 후 -> 메인페이지
+		if (result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 회원탈퇴 되었습니다.");
+			session.removeAttribute("loginUser");
+			response.sendRedirect(request.getContextPath());
+		} else { 	// kh/myPage.me로 이동 //실패시 세션에 alertMsg로 회원탈퇴 실패
+			session.setAttribute("alertMsg", "회원탈퇴 실패하였습니다.");
+			response.sendRedirect(request.getContextPath() + "/myPage.me");
+		}
 		
-		//실패시 세션에 alertMsg로 회원탈퇴 실패
-		// kh/myPage.me로 이동
+		/**
+		 * 정보변경, 비밀번호변경 -> 데이터를 데이터베이스로 다시 가져와 넣어주기
+		 * 
+		 * 탈퇴 성공시 => 메인페이지 alert(성공했다.)
+		 * 				단, 로그아웃처리해야함(session에 loginUser라는 키값에 데이터가 없어야한다.)
+		 * 실패시 => 마이페이지 alert(회원달퇴 실패)
+		 */
+	
 		
 		
 		
