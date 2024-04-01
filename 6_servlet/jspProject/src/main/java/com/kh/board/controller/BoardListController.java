@@ -98,6 +98,23 @@ public class BoardListController extends HttpServlet {
 		 */
 		
 		startPage = ((currentPage - 1) / pageLimit) * pageLimit + 1;
+		
+		/**
+		 * endPage : 페이징바의 끝수
+		 * 
+		 * pageLimit : 10이라는 가정하에
+		 * 
+		 * startPage: 1=> endPage : 10
+		 * startPage: 11=> endPage : 20
+		 * startPage: 21=> endPage : 30
+		 */
+		
+		endPage = startPage + pageLimit - 1;
+		
+		//startPage가 11이면 endPage는 20이다(만약 maxPage가 13이라면?)
+		endPage = endPage > maxPage ? maxPage : endPage;
+		
+		
 	
 	}
 
