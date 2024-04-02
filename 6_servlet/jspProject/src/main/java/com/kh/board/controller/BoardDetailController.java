@@ -33,6 +33,14 @@ public class BoardDetailController extends HttpServlet {
 		int boardNo = Integer.parseInt(request.getParameter("bno"));
 	
 		Board b = new BoardService().increaseCount(boardNo);
+		
+		if (b != null) {
+			request.setAttribute("board", b);
+			request.getRequestDispatcher("views/board/boardDetailView.jsp").forward(request, response);
+		} else {
+			request.setAttribute("errorMsg", "게시글 조회 실패");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		}
 	
 	}
 
