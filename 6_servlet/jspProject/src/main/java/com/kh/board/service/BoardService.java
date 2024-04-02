@@ -1,7 +1,6 @@
 package com.kh.board.service;
 
-import static com.kh.common.JDBCTemplate.close;
-import static com.kh.common.JDBCTemplate.getConnection;
+import static com.kh.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -28,6 +27,26 @@ public class BoardService {
 		close(conn);
 		
 		return list;
+	}
+	
+	public Board increaseCount(int boardNo) {
+		Connection conn = getConnection();
+		
+		BoardDao bDao = new BoardDao();
+		int result = bDao.increaseCount(conn, boardNo);
+		
+		Board b = null;
+		if(result > 0) {
+			commit(conn);
+			// 정보조회
+			b = bDao.selectBoard(conn, boardNo);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return b;
 	}
 
 }

@@ -81,6 +81,18 @@
               	<% } %> 
             </tbody>
         </table>
+        <script>
+        	//kh/detail.bo?bno=? 요청
+        	const trList = document.querySelectorAll(".list-area>tbody>tr");
+            for (let tr of trList) {
+                tr.onclick = function(){
+                    // this => 클릭된 객체를 가르킨다.
+                    // .children => 객체의 자식노드list를 전부 가져온다.
+                    let bno = this.children[0].innerText;
+                    location.href = "<%=contextPath%>/detail.bo?bno=" + bno;
+                }
+            }
+        </script>
         
         <br><br>
         <div class="paging-area" align="center">
