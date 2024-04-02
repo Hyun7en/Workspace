@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
+import com.kh.common.MyFileRenamePolicy;
 import com.oreilly.servlet.MultipartRequest;
 
 /**
@@ -71,18 +72,16 @@ public class BoardInsertController extends HttpServlet {
 			 * }
 			 * 
 			 * 나만의 방식대로 절대 겹치지않도록 rename 할수있게 FileRenamePolicy클래스 만들기
+			 * com.kh.common.MyFileRenamePolicy
 			 */
+			
+			//MultipartRequest multiRequest = new MultipartRequest(request, 저장시킬 폴더의 경로, 용량제한, 인코딩, new DefaultFileRenamePolicy());
+			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 			
 			
 			
 		}
 		
-		
-		
-		
-		
-		//MultipartRequest multiRequest = new MultipartRequest(request, 저장시킬 폴더의 경로, 용량제한, 인코딩, new DefaultFileRenamePolicy());
-		MultipartRequest multiRequest = new MultipartRequest();
 	
 	}
 
