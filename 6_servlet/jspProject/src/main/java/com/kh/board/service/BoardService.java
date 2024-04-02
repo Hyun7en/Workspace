@@ -1,12 +1,16 @@
 package com.kh.board.service;
 
-import static com.kh.common.JDBCTemplate.*;
+import static com.kh.common.JDBCTemplate.close;
+import static com.kh.common.JDBCTemplate.commit;
+import static com.kh.common.JDBCTemplate.getConnection;
+import static com.kh.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.kh.board.model.dao.BoardDao;
 import com.kh.board.model.vo.Board;
+import com.kh.board.model.vo.Category;
 import com.kh.common.vo.PageInfo;
 
 public class BoardService {
@@ -47,6 +51,15 @@ public class BoardService {
 		close(conn);
 		
 		return b;
+	}
+	
+	public ArrayList<Category> selectCategoryList(){
+		Connection conn = getConnection();
+		
+		ArrayList<Category> list = new BoardDao().selectCategoryList(conn);
+		close(conn);
+		
+		return list;
 	}
 
 }

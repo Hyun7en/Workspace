@@ -46,9 +46,9 @@
         <br>
 
         <% if( loginUser != null){%>
-            <!-- 현재 로그인한 사용자가 관리자일 때-->
+            <!-- 로그인한 사용자 일때-->
             <div align="right" style="width: 850px; margin-bottom: 4px;">
-                <a href="" class="btn btn-sm btn-secondary">글쓰기</a>
+                <a href="<%=contextPath %>/enrollForm.bo" class="btn btn-sm btn-secondary">글쓰기</a>
             </div>
         <%}%>    
         <table class="list-area" align="center">

@@ -44,4 +44,9 @@
           JOIN MEMBER ON (BOARD_WRITER = USER_NO)
          WHERE BOARD_NO = ?
 	</entry>
+	<entry key="selectCategoryList">
+		SELECT CATEGORY_NO
+		     , CATEGORY_NAME
+		  FROM CATEGORY
+	</entry>
 </properties>
