@@ -1,6 +1,7 @@
 package com.kh.board.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.board.model.vo.Board;
 import com.kh.board.service.BoardService;
+import com.kh.common.vo.PageInfo;
 
 /**
  * Servlet implementation class BoardListController
@@ -46,7 +49,7 @@ public class BoardListController extends HttpServlet {
 		//* currentPage : 현재 페이지(사용자가 요청한 페이지)
 		currentPage = Integer.parseInt(request.getParameter("cpage"));
 		
-		//* pageLimit : 페이징방의 최대갯수
+		//* pageLimit : 페이징바의 최대갯수
 		pageLimit = 10;
 		
 		//* boardLimit :한 페이지내에 보여질 게시글 최대갯수
@@ -114,7 +117,14 @@ public class BoardListController extends HttpServlet {
 		//startPage가 11이면 endPage는 20이다(만약 maxPage가 13이라면?)
 		endPage = endPage > maxPage ? maxPage : endPage;
 		
+		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
+		ArrayList<Board> list = new BoardService().selectList(pi);
+		
+		request.setAttribute("pi", pi);
+		request.setAttribute("list", list);
+		
+		request.getRequestDispatcher("views/board/boardListView.jsp").forward(request, response);
 	
 	}
 

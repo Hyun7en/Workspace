@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.kh.common.vo.PageInfo, java.util.ArrayList, com.kh.board.model.vo.Board" %>
+
+<%
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
+	
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,41 +61,43 @@
                 <th width="100">작성일</th>
             </thead>
             <tbody>
-              
-                <!-- 게시글이 없을 경우
-                <tr>
-                    <td colspan="6">존재하는 게시글이 없습니다.</td>
-                </tr> -->
-
-                <!-- 게시글 있는 경우 -->
-                <tr>
-                    <td>1</td>
-                    <td>운동</td>
-                    <td>같이 운동하실분?</td>
-                    <td>user01</td>
-                    <td>47</td>
-                    <td>2024-03-31</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>운동</td>
-                    <td>같이 운동하실분?</td>
-                    <td>user01</td>
-                    <td>47</td>
-                    <td>2024-03-31</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>운동</td>
-                    <td>같이 운동하실분?</td>
-                    <td>user01</td>
-                    <td>47</td>
-                    <td>2024-03-31</td>
-                </tr>
-               
-                
+              	<% if(list.isEmpty()) { %>
+	                <!-- 게시글이 없을 경우 -->
+	                <tr>
+	                    <td colspan="6">존재하는 게시글이 없습니다.</td>
+	                </tr> 
+                <% } else { %>
+					<%for(Board b : list) { %>
+		                <!-- 게시글 있는 경우 -->
+		                <tr>
+		                    <td><%=b.getBoardNo() %></td>
+		                    <td><%=b.getCategory() %></td>
+		                    <td><%=b.getBoardTitle() %></td>
+		                    <td><%=b.getBoardWriter() %></td>
+		                    <td><%=b.getCount() %></td>
+		                    <td><%=b.getCreateDate() %></td>
+		                </tr>
+		            <% } %>
+              	<% } %> 
             </tbody>
         </table>
+        
+        <br><br>
+        <div class="paging-area" align="center">
+        	<%if(currentPage != 1){ %>
+        		<button onclick="location.href='<%=contextPath%>/list.bo?cpage=<%=currentPage - 1%>'">&lt;</button>
+        	<%} %>
+        	<%for(int p = startPage; p <= endPage; p++){ %>
+        		<%if(p == currentPage) { %>
+        			<button disabled><%=p %></button>
+        		<%} else { %>
+        			<button onclick="location.href='<%=contextPath%>/list.bo?cpage=<%=p %>'"><%=p %></button>
+        		<%} %>
+        	<%} %>
+        	<%if(currentPage != maxPage){ %>
+        		<button onclick="location.href='<%=contextPath%>/list.bo?cpage=<%=currentPage + 1%>'">&gt;</button>
+        	<%} %>
+        </div>
     </div>
 </body>
 </html>
