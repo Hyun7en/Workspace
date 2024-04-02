@@ -36,6 +36,7 @@
         <br>
 
         <form id="enroll-form" action="<%=contextPath %>/insert.bo" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="userNo" value="<%=loginUser.getUserNo()%>">
             <table>
                 <tr>
                     <th width="70">카테고리</th>

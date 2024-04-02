@@ -1,5 +1,6 @@
 package com.kh.board.controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -10,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
+import com.kh.board.model.vo.Attachment;
+import com.kh.board.model.vo.Board;
+import com.kh.board.service.BoardService;
 import com.kh.common.MyFileRenamePolicy;
 import com.oreilly.servlet.MultipartRequest;
 
@@ -78,7 +82,46 @@ public class BoardInsertController extends HttpServlet {
 			//MultipartRequest multiRequest = new MultipartRequest(request, 저장시킬 폴더의 경로, 용량제한, 인코딩, new DefaultFileRenamePolicy());
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 			
+			//3. DB에 기록할 데이터를 추출해서 VO에 차곡차곡 담아주자
+			// > 카테고리번호, 제목, 내용, 작성자번호
+			// > 첨부파일이 있다면 원본명, 수정명, 저장폴더경로
 			
+			String category = multiRequest.getParameter("category");
+			String boardTitle = multiRequest.getParameter("title");
+			String boardContent = multiRequest.getParameter("content");
+			String boardWriter = multiRequest.getParameter("userNo");
+			
+			Board b = new Board();
+			b.setCategory(category);
+			b.setBoardTitle(boardTitle);
+			b.setBoardContent(boardContent);
+			b.setBoardWriter(boardWriter);
+			
+			Attachment at = null;
+			
+			if (multiRequest.getOriginalFileName("upfile") != null) {
+				at = new Attachment();
+				at.setOriginName(multiRequest.getOriginalFileName("upfile"));
+				at.setChangeName(multiRequest.getFilesystemName("upfile"));
+				at.setFilePath("resources/board_upfile/");
+			}
+			
+			//4. 서비스요청
+			int result = new BoardService().insertBoard(b, at);
+			
+			//5. 응답뷰 요청
+			if (result > 0) { //성공 -> 목록페이지(kh/list.bo?cpage=1)
+				request.getSession().setAttribute("alertMsg", "일반게시글 작성 성공");
+				response.sendRedirect(request.getContextPath() + "/list.bo?cpage=1");
+				
+			} else { //실패 -> 업로드된 파일 삭제해주고 에러페이지
+				if (at != null) {
+					new File(savePath + at.getChangeName()).delete();
+				}
+				
+				request.setAttribute("errorMsg", "일반게시글 작성 실패");
+				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			}
 			
 		}
 		
