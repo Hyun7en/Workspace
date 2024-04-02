@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList" %>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.kh.board.model.vo.Category" %>
 
+<%
+	ArrayList<Category> list = (ArrayList<Category>)request.getAttribute("categorys");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,15 +35,16 @@
         <h2 align="center">일반게시판 작성하기</h2>
         <br>
 
-        <form id="enroll-form" action="" method="post">
+        <form id="enroll-form" action="<%=contextPath %>/insert.bo" method="post" enctype="multipart/form-data">
             <table>
                 <tr>
                     <th width="70">카테고리</th>
                     <td width="500">
                         <select name="category">
-                            	<option value="운동">운동</option>
-                                <option value="영화">영화</option>
-                                <option value="등산">등산</option>
+                        	<!-- category테이블로부터 조회해오기 -->
+                        	<% for(Category c : list) { %>
+                            	<option value="<%=c.getCategoryNo()%>"><%=c.getCategoryName() %></option>
+                            <%} %>
                         </select>
                     </td>
                 </tr>
