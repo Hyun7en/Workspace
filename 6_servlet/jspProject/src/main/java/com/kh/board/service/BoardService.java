@@ -112,7 +112,16 @@ public class BoardService {
 			} else {//기존첨부파일이 없으므로 insert
 				result2 = bDao.insertNewAttachment(conn, at);
 			}
-			
 		}
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+
+		return result1 * result2;
 	}
 }

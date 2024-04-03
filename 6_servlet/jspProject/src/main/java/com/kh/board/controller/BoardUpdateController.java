@@ -81,6 +81,17 @@ public class BoardUpdateController extends HttpServlet {
 			//새로운 첨부파일 x  							b, null  => board update
 			//새로운 첨부파일 o, 기존첨부파일 o 				b, fileNo at => board update, attachment update
 			//새로운 첨부파일 o, 기존첨부파일 x				b, refBoardNo가 담긴 at => board update, attachment insert
+		
+			if(result > 0) {
+				//성공 => /kh/detail.bo?bno=게시글번호
+				request.getSession().setAttribute("alertMsg", "성공적으로 수정하였습니다.");
+				response.sendRedirect(request.getContextPath() + "/detail.bo?bno=" + b.getBoardNo());
+			} else {
+				//실패 => error페이지
+				request.setAttribute("errorPage", "게시글 수정 실패");
+				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+				
+			}
 		}
 		
 		

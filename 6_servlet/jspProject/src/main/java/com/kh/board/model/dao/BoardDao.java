@@ -301,7 +301,7 @@ public class BoardDao {
 		int result = 0;
 		
 		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("updateAttachement");
+		String sql = prop.getProperty("updateAttachment");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -310,6 +310,32 @@ public class BoardDao {
 			pstmt.setString(2, at.getChangeName());
 			pstmt.setString(3, at.getFilePath());
 			pstmt.setInt(4, at.getFileNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	public int insertNewAttachment(Connection conn, Attachment at) {
+		//insert -> 처리된 행 수 -> 트랜잭션
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertNewAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);//미완성(4)
+			
+			pstmt.setInt(1, at.getRefBoardNo());
+			pstmt.setString(2, at.getOriginName());
+			pstmt.setString(3, at.getChangeName());
+			pstmt.setString(4, at.getFilePath());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
