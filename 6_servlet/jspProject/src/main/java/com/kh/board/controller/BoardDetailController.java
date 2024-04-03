@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.board.model.vo.Attachment;
 import com.kh.board.model.vo.Board;
 import com.kh.board.service.BoardService;
 
@@ -32,10 +33,15 @@ public class BoardDetailController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int boardNo = Integer.parseInt(request.getParameter("bno"));
 	
-		Board b = new BoardService().increaseCount(boardNo);
+		BoardService bService = new BoardService();
+		//조회수 1 증가시키고 디테일페이지에 보여줄 board객체
+		Board b = bService.increaseCount(boardNo);
 		
 		if (b != null) {
+			Attachment at = bService.selectAttachment(boardNo);
+			
 			request.setAttribute("board", b);
+			request.setAttribute("attachment", at);
 			request.getRequestDispatcher("views/board/boardDetailView.jsp").forward(request, response);
 		} else {
 			request.setAttribute("errorMsg", "게시글 조회 실패");

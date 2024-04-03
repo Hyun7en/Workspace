@@ -83,5 +83,13 @@ public class BoardService {
 		
 		return result1 * result2;
 	}
+	
+	public Attachment selectAttachment(int boardNo) {
+		Connection conn = getConnection();
+		Attachment at = new BoardDao().selectAttachment(conn, boardNo);
+		
+		close(conn);
+		return at;
+	}
 
 }

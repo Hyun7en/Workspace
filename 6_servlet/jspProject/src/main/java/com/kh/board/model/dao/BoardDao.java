@@ -239,6 +239,39 @@ public class BoardDao {
 		return result;
 	}
 	
+	public Attachment selectAttachment(Connection conn, int boardNo) {
+		//select => ResultSet(한행) => Attachment
+		
+		Attachment at = null;
+		ResultSet rset = null;
+		
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql); //미완성
+			pstmt.setInt(1, boardNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if (rset.next()) {
+				at = new Attachment();
+				at.setFileNo(rset.getInt("file_no"));
+				at.setOriginName(rset.getString("origin_name"));
+				at.setChangeName(rset.getString("change_name"));
+				at.setFilePath(rset.getString("file_path"));
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return at;
+	}
 	
 	
 	
