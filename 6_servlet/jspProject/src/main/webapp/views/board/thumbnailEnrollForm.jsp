@@ -64,7 +64,7 @@
                 </tr>
             </table>
 
-            <div >
+            <div>
                 <input type="file" name="file1" id="file1" required onchange="loadImg(this, 1)">
                 <input type="file" name="file2" id="file2" onchange="loadImg(this, 2)">
                 <input type="file" name="file3" id="file3" onchange="loadImg(this, 3)">
@@ -114,6 +114,12 @@
                     imgInput.click();
                 }
             </script>
+
+            <br>
+
+            <div align="center">
+                <button type="submit">등록하기</button>
+            </div>
         </form>
     </div>
 </body>
