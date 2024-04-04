@@ -27,7 +27,7 @@
         border: 1px solid white;
         padding: 12px;
         margin: 14px;
-        width: 226px;
+        width: 252px;
     }
 
     .thumbnail:hover{
@@ -56,14 +56,15 @@
         
         <% if(loginUser != null) {%>
         	  <!-- 로그인한 사용자 일때-->
-            <div align="right" style="width: 850px; margin-bottom: 4px;">
+            <div align="right" style="width: 850px; margin: auto; margin-bottom: 4px;">
                 <a href="<%=contextPath %>/enrollForm.th" class="btn btn-sm btn-secondary">글쓰기</a>
             </div>
         <%} %>
 
         <div class="list-area">
         	<%for (Board b : list) { %>
-	            <div class="thumbnail" align="center">
+	            <div class="thumbnail" align="center" >
+	            	<input type="hidden" value="<%=b.getBoardNo() %>">
 	                <img src="<%=contextPath %>/<%=b.getTitleImg() %>" width="200px" height="150px">
 	                <p>
 	                    <span>No. <%=b.getBoardNo() %> <%=b.getBoardTitle() %></span> <br>
@@ -73,5 +74,13 @@
             <%} %>
         </div>
     </div>
+    
+    <script>
+    	$(function(){
+    		$(".thumbnail").click(function(){
+    			location.href = "<%=contextPath%>/detail.th?bno=" + $(this).children().eq(0).val();
+    		})
+    	})
+    </script>
 </body>
 </html>
