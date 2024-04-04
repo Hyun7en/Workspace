@@ -124,4 +124,10 @@ public class BoardService {
 
 		return result1 * result2;
 	}
+	
+	public int insertThumbnailBoard(Board b, ArrayList<Attachment> list) {
+		Connection conn = getConnection();
+		
+		int result1 = new BoardDao().insertThumbnailBoard(conn, b);
+	}
 }
