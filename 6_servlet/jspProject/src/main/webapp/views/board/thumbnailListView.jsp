@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, com.kh.board.model.vo.Board"%>
+<%
+	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,50 +53,24 @@
         <br>
         <h2 align="center">사진게시판</h2>
         <br>
+        
+        <% if(loginUser != null) {%>
+        	  <!-- 로그인한 사용자 일때-->
+            <div align="right" style="width: 850px; margin-bottom: 4px;">
+                <a href="<%=contextPath %>/enrollForm.th" class="btn btn-sm btn-secondary">글쓰기</a>
+            </div>
+        <%} %>
 
         <div class="list-area">
-            <div class="thumbnail" align="center">
-                <img src="" alt="썸네일" width="200px" height="150px">
-                <p>
-                    <span>No. 125 빵빵이의 하루</span> <br>
-                    조회수 : 155
-                </p>
-            </div>
-            <div class="thumbnail" align="center">
-                <img src="" alt="썸네일" width="200px" height="150px">
-                <p>
-                    <span>No. 125 빵빵이의 하루</span> <br>
-                    조회수 : 155
-                </p>
-            </div>
-            <div class="thumbnail" align="center">
-                <img src="" alt="썸네일" width="200px" height="150px">
-                <p>
-                    <span>No. 125 빵빵이의 하루</span> <br>
-                    조회수 : 155
-                </p>
-            </div>
-            <div class="thumbnail" align="center">
-                <img src="" alt="썸네일" width="200px" height="150px">
-                <p>
-                    <span>No. 125 빵빵이의 하루</span> <br>
-                    조회수 : 155
-                </p>
-            </div>
-            <div class="thumbnail" align="center">
-                <img src="" alt="썸네일" width="200px" height="150px">
-                <p>
-                    <span>No. 125 빵빵이의 하루</span> <br>
-                    조회수 : 155
-                </p>
-            </div>
-            <div class="thumbnail" align="center">
-                <img src="" alt="썸네일" width="200px" height="150px">
-                <p>
-                    <span>No. 125 빵빵이의 하루</span> <br>
-                    조회수 : 155
-                </p>
-            </div>
+        	<%for (Board b : list) { %>
+	            <div class="thumbnail" align="center">
+	                <img src="<%=contextPath %>/<%=b.getTitleImg() %>" width="200px" height="150px">
+	                <p>
+	                    <span>No. <%=b.getBoardNo() %> <%=b.getBoardTitle() %></span> <br>
+	                    조회수 : <%=b.getCount() %>
+	                </p>
+	            </div>
+            <%} %>
         </div>
     </div>
 </body>
