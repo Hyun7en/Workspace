@@ -20,9 +20,10 @@
         background: black;
         color: white;
         width: 1000px;
-        height: 500px;
+        height: auto;
         margin: auto;
         margin-top: 50px;
+        padding-bottom: 24px;
     }
 
     .outer table {
@@ -84,7 +85,49 @@
 	            <a href="" class="btn btn-sm btn-danger">삭제하기</a>
             <%} %>
         </div>
+        
+        <br>
 
+        <div id="reply-area">
+            <table align="center">
+                <thead>
+                    <tr>
+                        <th>댓글작성</th>
+                        <td>
+                            <textarea id="reply-content" cols="50" rows="3" style="resize: none;"></textarea>
+                        </td>
+                        <td>
+                            <button onclick="insertReply()">댓글등록</button>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+
+            <script>
+                function insertReply(){
+                    const boardNo = <%=b.getBoardNo()%>;
+                    const content = document.querySelector("#reply-content").value;
+
+                    $.ajax({
+                        url : "rinsert.bo",
+                        data : {
+                            bno : boardNo,
+                            content : content
+                        },
+                        type : "POST",
+                        success : function(res){
+                            console.log(res)
+                        }, 
+                        error : function(){
+                            console.log("댓글 작성중 ajax통신 실패")
+                        }
+                    })
+                }
+            </script>
+        </div>
     </div>
 </body>
 </html>
