@@ -44,7 +44,7 @@ public class ThumbnailDetailController extends HttpServlet {
 			
 			request.getRequestDispatcher("views/board/thumbnailDetailView.jsp").forward(request, response);
 		} else {
-			request.setAttribute("errorPage", "사진 게시글 조회 실패");
+			request.setAttribute("errorMsg", "사진 게시글 조회 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 	
