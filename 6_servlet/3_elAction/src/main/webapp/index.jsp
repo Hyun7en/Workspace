@@ -41,6 +41,6 @@
 	 <a href="views/2_Standard_Action_Tag/02_forward.jsp">02_jsp:forward</a>
 	 
 	 <h3>* Custom Action Tag</h3>
-	 <a></a>
+	 <a href="views/3_Custom_Action_Tag/01_core.jsp">01_core</a>
 </body>
 </html>
