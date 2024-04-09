@@ -68,6 +68,10 @@ public class MemberDao {
 		return m;
 	}
 	
+	public Member loginMember(SqlSession sqlSession, String userId, String userPwd) {
+		sqlSession
+	}
+	
 	public int insertMember(Connection conn, Member m) {
 		// insert문 => 처리된 행 수 => 트랜잭션처리
 		
