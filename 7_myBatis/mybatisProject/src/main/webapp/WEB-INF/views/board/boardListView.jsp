@@ -37,13 +37,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>안녕하세요</td>
-                    <td>user02</td>
-                    <td>51</td>
-                    <td>2024-04-05</td>
-                </tr>
+            	<c:forEach var="b" items="${list}">
+	                <tr>
+	                    <td>${b.boardNo }</td>
+	                    <td>${b.boardTitle }</td>
+	                    <td>${b.boardWriter }</td>
+	                    <td>${b.count }</td>
+	                    <td>${b.createDate }</td>
+	                </tr>
+                </c:forEach>
             </tbody>
         </table>
         <br><br>
