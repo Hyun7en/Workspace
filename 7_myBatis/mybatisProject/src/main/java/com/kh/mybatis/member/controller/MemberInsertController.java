@@ -30,7 +30,7 @@ public class MemberInsertController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
+		//request.setCharacterEncoding("UTF-8");
 		
 		String userId = request.getParameter("userId");
 		String userPwd = request.getParameter("userPwd");
@@ -49,7 +49,7 @@ public class MemberInsertController extends HttpServlet {
 							  gender,
 							  phone,
 							  address);
-		
+		System.out.println(m);
 		int result = new MemberServiceImpl().insertMember(m);
 		
 		if (result > 0) {
