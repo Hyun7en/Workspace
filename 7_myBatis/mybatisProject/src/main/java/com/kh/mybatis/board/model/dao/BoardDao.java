@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import com.kh.mybatis.board.model.vo.Board;
+import com.kh.mybatis.board.model.vo.Reply;
 import com.kh.mybatis.common.vo.PageInfo;
 
 public class BoardDao {
@@ -50,5 +51,9 @@ public class BoardDao {
 	
 	public Board selectBoard(SqlSession sqlSession, int boardNo) {
 		return sqlSession.selectOne("boardMapper.selectBoard", boardNo);
+	}
+	
+	public ArrayList<Reply> selectReplyList(SqlSession sqlSession, int boardNo){
+		return (ArrayList)sqlSession.selectList("boardMapper.selectReplyList", boardNo);
 	}
 }

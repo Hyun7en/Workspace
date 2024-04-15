@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.kh.mybatis.board.model.dao.BoardDao;
 import com.kh.mybatis.board.model.vo.Board;
+import com.kh.mybatis.board.model.vo.Reply;
 import com.kh.mybatis.common.template.Template;
 import com.kh.mybatis.common.vo.PageInfo;
 
@@ -67,7 +68,19 @@ public class BoardServiceImpl implements BoardService{
 			sqlSession.rollback();
 		}
 		
+		sqlSession.close();
+		
 		return b;
+	}
+
+	@Override
+	public ArrayList<Reply> selectReplyList(int boardNo) {
+		SqlSession sqlSession = Template.getSqlSession();
+		ArrayList<Reply> list = bDao.selectReplyList(sqlSession, boardNo);
+		
+		sqlSession.close();
+		
+		return list;
 	}
 
 }
