@@ -54,4 +54,20 @@ public class BoardServiceImpl implements BoardService{
 		return list;
 	}
 
+	@Override
+	public Board increaseCount(int boardNo) {
+		SqlSession sqlSession = Template.getSqlSession();
+		int result = bDao.increaseCount(sqlSession, boardNo);
+		
+		Board b = null;
+		if (result > 0) {
+			sqlSession.commit();
+			b = bDao.selectBoard(sqlSession, boardNo);
+		} else {
+			sqlSession.rollback();
+		}
+		
+		return b;
+	}
+
 }
