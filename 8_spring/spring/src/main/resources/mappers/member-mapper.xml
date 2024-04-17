@@ -38,4 +38,10 @@
 		   AND USER_PWD = #{userPwd}
 		   AND STATUS = 'Y'
 	</select>
+	<!-- 아이디중복체크 -->
+	<select id="idCheck" resultType="_int">
+		SELECT COUNT(*)
+		  FROM MEMBER
+		 WHERE USER_ID = #{checkId}
+	</select>
 </mapper>

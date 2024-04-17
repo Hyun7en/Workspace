@@ -53,17 +53,38 @@
                 </div> 
                 <br>
                 <div class="btns" align="center">
-                    <button type="submit" class="btn btn-primary disabled">회원가입</button>
+                    <button type="submit" class="btn btn-primary" disabled>회원가입</button>
                     <button type="reset" class="btn btn-danger">초기화</button>
                 </div>
             </form>
         </div>
         <br><br>   
+        <script>
+            $(function(){
+                const idInput = document.querySelector("#enrollForm input[name=userId]");
+                idInput.onkeyup = function(ev){
+                    //키가 눌릴때마다 해당 아이디가 중복이되는지 검사
+                    //서버에 데이터를 보내서 응답을 받아야한다 -> ajax
+
+                    $.ajax({
+                        url: "idCheck.me",
+                        data: {checkId : ev.target.value}, // 체크하고싶은 사용자가 입력한 아이디
+                        success: function(result){
+                            console.log(result)
+                        },
+                        error: function(){
+                            console.log("아이디 중복체크 ajax 실패");
+                        }
+                    })
+                }
+                
+            })
+        </script>
 
     </div>
 
     <!-- 푸터바 -->
     <jsp:include page="../common/footer.jsp" />
-
+    
 </body>
 </html>
