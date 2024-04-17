@@ -135,4 +135,13 @@ public class MemberController {
 		
 		return mv;
 	}
+	
+	@RequestMapping("logout.me")
+	public String logoutMember(HttpSession session){
+		//로그아웃 -> session에서 loginUser 삭제, 만료
+		//session.invalidate();
+		session.removeAttribute("loginUser");
+		
+		return "redirect:/";
+	}
 }
