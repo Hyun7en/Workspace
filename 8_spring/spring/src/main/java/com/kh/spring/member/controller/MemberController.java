@@ -171,4 +171,18 @@ public class MemberController {
 		
 		//return memberService.idCheck(checkId) > 0 ? "NNNNN" : "NNNNY";
 	}
+	
+	@RequestMapping("insert.me")
+	public String insertMember(Member m) {
+		/*
+		 * 1. 한글깨짐문제 발생 => web.xml에 스프링에서 제공하는 인코딩 필터 등록
+		 * 2. 나이를 입력하지 않을 경우 int자료형에 빈문자열을 대입해야하는 경우가 발생한다.
+		 * => 400에러 방생  Member의 age필드 자료형을 String으로 변경해주면 된다.
+		 * 
+		 * 
+		 */
+		
+		System.out.println(m);
+		return "main";
+	}
 }
