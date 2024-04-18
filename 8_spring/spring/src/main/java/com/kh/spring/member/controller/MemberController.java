@@ -259,4 +259,31 @@ public class MemberController {
 		}
 		
 	}
+	
+	@RequestMapping("delete.me")
+	public String deleteMember(Member m, HttpSession session) {
+		
+		//1. 암호화된 비밀번호 가져오기
+		String encPwd = ((Member)session.getAttribute("loginUser")).getUserPwd();
+		
+		//2. 비밀번호 일치/불일치 판단후
+		if (bcryptPasswordEncoder.matches(m.getUserPwd(), encPwd)) {
+			//일치 -> 탈퇴처리 -> session에서 제거 -> 메인페이지로
+			int result = memberService.deleteMember(m.getUserId());
+			
+			if(result > 0) {
+				session.removeAttribute("loginUser");
+				session.setAttribute("alertMsg", "회원탈퇴가 성공적으로 이루어졌습니다.");
+				return "redirect:/";
+			} else {
+				session.setAttribute("alertMsg", "탈퇴처리 실패");
+				return "redirect:/myPage.me";
+			}
+			
+		} else {
+			//불일치 -> alertMsg: 비밀번호 다시 입력 -> 마이페이지
+			session.setAttribute("alertMsg", "비밀번호를 다시 확인해주세요");
+			return "redirect:/myPage.me";
+		}
+	}
 }
