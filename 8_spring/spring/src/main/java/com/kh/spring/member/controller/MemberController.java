@@ -125,18 +125,52 @@ public class MemberController {
 	
 	@RequestMapping("login.me")
 	public ModelAndView loginMember(Member m, ModelAndView mv, HttpSession session) {	
+		//암호화 전
+//		Member loginUser = memberService.loginMember(m);
+//		
+//		if(loginUser == null) { //로그인 실패 => 에러문구를 requestScope에 담고 에러페이지로 포워딩
+//			//model.addAttribute("errorMsg", "로그인실패");
+//			mv.addObject("errorMsg", "로그인실패");
+//			
+//			// /WEB-INF/views/common/errorPage.jsp
+//			//return "/common/errorPage";
+//			mv.setViewName("common/errorPage");
+//		} else { // 로그인 성공 => sessionScope에 로그인유저 담아서 메인으로 url재요청
+//			session.setAttribute("loginUser", loginUser);
+//			//return "redirect:/";
+//			mv.setViewName("redirect:/");
+//		}
+		
+		
+		
+		//암호화 후
+		//Member m의 id => 사용자가 입력한 아이디
+		//		 m의 pwd => 사용자가 입력한 pwd(평문)
+		
 		Member loginUser = memberService.loginMember(m);
 		
-		if(loginUser == null) { //로그인 실패 => 에러문구를 requestScope에 담고 에러페이지로 포워딩
-			//model.addAttribute("errorMsg", "로그인실패");
-			mv.addObject("errorMsg", "로그인실패");
+		// loginUser id => 아이디로 db에서 검색해온 id
+		//loginUser pwd => db에 기록된 암호화된 비밀번호
+		
+		
+		//bcryptPasswordEncoder객체의 matches()
+		//matches(평문, 암호문)을 작성하면 내부적으로 복호화작업 후 비교가 이루어짐
+		//두 구문이 일치하면 true를 반환 일치하지않으면 false 반환
+		
+		bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd());
+		
+		if (loginUser == null) { // 아이디가 없는 경우
+			mv.addObject("errorMsg", "일치하는 아이디를 찾을 수 없습니다.");
 			
-			// /WEB-INF/views/common/errorPage.jsp
-			//return "/common/errorPage";
 			mv.setViewName("common/errorPage");
-		} else { // 로그인 성공 => sessionScope에 로그인유저 담아서 메인으로 url재요청
+			
+			//비밀번호가 다른경우
+		} else if (!bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())){ 
+			mv.addObject("errorMsg", "비밀번호가 일치하지 않습니다.");
+			
+			mv.setViewName("common/errorPage");
+		} else { // 성공
 			session.setAttribute("loginUser", loginUser);
-			//return "redirect:/";
 			mv.setViewName("redirect:/");
 		}
 		
