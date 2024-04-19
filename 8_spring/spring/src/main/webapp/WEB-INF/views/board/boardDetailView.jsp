@@ -120,7 +120,48 @@
         <script>
             $(function(){
                 getReplyList({bno : ${b.boardNo}}, function(reulst){
-                    drawReplyList(reulst);
+                    // reulst = reulst.map(r => {
+                    //     return {
+                    //         ...r,
+                    //         cNo : 1
+                    //     }
+                    // })
+
+                    // reulst.push({
+                    //     cNo : 2,
+                    //     createDate : "2022-10-30",
+                    //     refBno : 0,
+                    //     replyContent : "안녕하세요",
+                    //     replyNo: 5,
+                    //     replyWriter: "admin"
+                    // });
+
+                    // const rList = {
+                        
+                    // }
+                    // for (let r of reulst) {
+                    //     if (rList[r.cNo]) {
+                    //         rList[r.cNo].push(r);
+                    //     } else {
+                    //         rList[r.cNo] = [r];
+                    //     }
+                    // }
+                    // console.log(rList)
+
+                    const replyBody = document.querySelector("#replyArea tbody");
+                    const list = [];
+                    for (let r of reulst) {
+                        list.push({
+                            tdData1: r.replyWriter,
+                            tdData2: r.replyContent,
+                            tdData3: r.createDate,
+                            rowEvent: function(){
+                                console.log("클릭됨")
+                            }
+                        })
+                    }
+
+                    drawTableList(reulst, replyBody);
                 })
             })
             
@@ -133,14 +174,53 @@
                     success: function(reulst){
                         callback(reulst)
                     },
-                    error: function(){
+                    error: function(item){
+                        console.log(item);
                         console.log("댓글요청 ajax 실패");
                     }
                 })
             }
 
-            function drawReplyList(replyList){
-                console.log(replyList)
+            function drawTableList(itemList, parent){
+
+               
+                //단순하게 보여주기위한 view를 작성할때  
+                // let str = "";                
+                // for (let reply of replyList) {
+                //     str += `<tr>
+                //                 <th>` + reply.replyWriter + `</th>
+                //                 <td>` + reply.replyContent + `</td>
+                //                 <td>` + reply.createDate + `</td>
+                //             </tr>`;
+                // }
+                // replyBody.innerHTML = str;
+
+                //이벤트를 넣는 뷰를 작성하고 싶을 때               
+                for (let reply of itemList) {
+                    const replyRow = document.createElement('tr');
+                    replyRow.innerHTML = `<th>` + reply.replyWriter + `</th>
+                                          <td>` + reply.replyContent + `</td>
+                                          <td>` + reply.createDate + `</td>`;
+                    parent.appendChild(replyRow);
+                    
+                    replyRow.onclick = function(){
+                        console.log(reply);
+                    }
+                }
+
+                //ui라이브러리형식으로 구성하기
+                // for (let item of itemList) {
+                //     const row = document.createElement('tr');
+                //     row.innerHTML = `<th>` + item.tdData1 + `</th>
+                //                           <td>` + item.tdData2 + `</td>
+                //                           <td>` + item.tdData3 + `</td>`
+                //     parent.appendChild(row);
+                    
+                //     row.onclick = function(){
+                //         item.rowEvent(item);
+                //     }
+                // }
+               
             }
         </script>
 
