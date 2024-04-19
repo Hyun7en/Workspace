@@ -62,8 +62,10 @@
    			
    			<!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
             <div align="center">
-                <a class="btn btn-primary" onclick="">수정하기</a>
-                <a class="btn btn-danger" onclick="">삭제하기</a>
+            	<c:if test="${loginUser.userId eq b.boardWriter}">
+	                <a class="btn btn-primary" onclick="">수정하기</a>
+	                <a class="btn btn-danger" onclick="">삭제하기</a>
+                </c:if>
             </div>
             <br><br>
            
@@ -74,48 +76,73 @@
              </form>
             
           
-            <!-- 댓글 기능은 나중에 ajax 배우고 나서 구현할 예정! 우선은 화면구현만 해놓음 -->
+ 
             <table id="replyArea" class="table" align="center">
                 <thead>
-                	
-                    <tr>
-                        <th colspan="2">
-                            <textarea class="form-control" readonly cols="55" rows="2" style="resize:none; width:100%;">로그인 후 이용 가능합니다.</textarea>
-                        </th>
-                        <th style="vertical-align:middle"><button class="btn btn-secondary disabled">등록하기</button></th>
-                    </tr>
-                		
-                    
-                     <tr> 
-                        <th colspan="2">
-                            <textarea class="form-control" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
-                        </th>
-                        <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addReply();">등록하기</button></th>
-                    </tr>
-                            
+                	<c:choose>
+                		<c:when test="${empty loginUser }">
+		                    <tr>
+		                        <th colspan="2">
+		                            <textarea class="form-control" readonly cols="55" rows="2" style="resize:none; width:100%;">로그인 후 이용 가능합니다.</textarea>
+		                        </th>
+		                        <th style="vertical-align:middle"><button class="btn btn-secondary disabled">등록하기</button></th>
+		                    </tr>
+	                	</c:when>
+	                    <c:otherwise>
+		                    <tr> 
+		                        <th colspan="2">
+		                            <textarea class="form-control" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
+		                        </th>
+		                        <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addReply();">등록하기</button></th>
+		                    </tr>
+	                    </c:otherwise>
+                    </c:choose>
                 
                     
                     
                     <tr>
-                        <td colspan="3">댓글(<span id="rcount">3</span>)</td>
+                        <td colspan="3">댓글(<span id="rcount">0</span>)</td>
                     </tr>
-                    <tr>
+    
+                </thead>
+                <tbody>
+                   <!--
+                   	<tr>
                         <th>admin</th>
                         <td>댓글남깁니다</td>
                         <td>2022-05-10</td>
                     </tr>
-                    <tr>
-                        <th>admin</th>
-                        <td>test샘플</td>
-                        <td>2022-08-10</td>
-                    </tr>
-                </thead>
-                <tbody>
-                  
+                   -->
                 </tbody>
             </table>
         </div>
         <br><br>
+        <script>
+            $(function(){
+                getReplyList({bno : ${b.boardNo}}, function(reulst){
+                    drawReplyList(reulst);
+                })
+            })
+            
+
+            // 댓글 목록 가져오기
+            function getReplyList(data, callback){
+                $.ajax({
+                    url: 'rlist.bo',
+                    data : data,
+                    success: function(reulst){
+                        callback(reulst)
+                    },
+                    error: function(){
+                        console.log("댓글요청 ajax 실패");
+                    }
+                })
+            }
+
+            function drawReplyList(replyList){
+                console.log(replyList)
+            }
+        </script>
 
     </div>
     
