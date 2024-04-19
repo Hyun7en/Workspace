@@ -29,5 +29,17 @@ public class BoardServiceImpl implements BoardService{
 	public ArrayList<Board> selectList(PageInfo pi) {
 		return boardDao.selectList(sqlSession, pi);
 	}
+
+	@Override
+	public int increaseCount(int bno) {
+		return boardDao.increaseCount(sqlSession, bno);
+	}
+
+	@Override
+	public Board selectBoard(int bno) {
+		return boardDao.selectBoard(sqlSession, bno);
+	}
+	
+	
 	
 }

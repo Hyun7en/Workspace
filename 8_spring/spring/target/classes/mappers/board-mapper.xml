@@ -9,7 +9,9 @@
 		<result column="BOARD_NO" property="boardNo"/>
 		<result column="BOARD_TITLE" property="boardTitle"/>
 		<result column="BOARD_WRITER" property="boardWriter"/>
+		<result column="BOARD_CONTENT" property="boardContent"/>
 		<result column="ORIGIN_NAME" property="originName"/>
+		<result column="CHANGE_NAME" property="changeName"/>
 		<result column="COUNT" property="count"/>
 		<result column="CREATE_DATE" property="createDate"/>
 	</resultMap>
@@ -30,5 +32,24 @@
 		  FROM BOARD
 		 WHERE STATUS = 'Y'
 		 ORDER BY BOARD_NO DESC  
+	</select>
+	<update id="increaseCount">
+		UPDATE BOARD
+		   SET COUNT = COUNT + 1
+		 WHERE BOARD_NO = #{bno}
+		   AND STATUS = 'Y'
+	</update>
+	<select id="selectBoard" resultMap="boardResult">
+		SELECT BOARD_NO,
+			   BOARD_TITLE,
+			   BOARD_WRITER,
+			   BOARD_CONTENT,
+			   ORIGIN_NAME,
+			   CHANGE_NAME,
+			   COUNT,
+			   TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE"
+		  FROM BOARD
+		 WHERE STATUS = 'Y'
+		   AND BOARD_NO = #{bno} 
 	</select>
 </mapper>
