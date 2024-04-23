@@ -135,7 +135,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping("update.bo")//@ModelAttribute
-	public String updateBoard(Board b, MultipartFile reupfile, HttpSession session) {
+	public String updateBoard(Board b, MultipartFile reupfile, HttpSession session, Model model) {
 		
 		//새로운 첨부파일이 넘어온 경우
 		if(!reupfile.getOriginalFilename().equals("")) {
@@ -169,8 +169,12 @@ public class BoardController {
 		
 		int result = boardService.updateBoard(b);
 		
-		
-		
-		return "board/boardUpdateForm";
+		if(result > 0) {//성공
+			session.setAttribute("alertMsg", "게시글 수정 성공");
+			return "redirect:detail.bo?bno=" + b.getBoardNo();
+		} else { //실패
+			model.addAttribute("errorMsg", "게시글 수정 실패");
+			return "common/errorPage";
+		}
 	}
 }
