@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -124,5 +125,52 @@ public class BoardController {
 		}
 		
 		return changeName;
+	}
+	
+	@RequestMapping("updateForm.bo")
+	public String updateForm(int bno, Model model) {
+		
+		model.addAttribute("b", boardService.selectBoard(bno));
+		return "board/boardUpdateForm";
+	}
+	
+	@RequestMapping("update.bo")//@ModelAttribute
+	public String updateBoard(Board b, MultipartFile reupfile, HttpSession session) {
+		
+		//새로운 첨부파일이 넘어온 경우
+		if(!reupfile.getOriginalFilename().equals("")) {
+			//기존의 첨부파일이 있다 => 기존의 파일을 삭제
+			if(b.getOriginName() != null) {
+				new File(session.getServletContext().getRealPath(b.getChangeName())).delete();
+			}
+			
+			//새로 넘어온 첨부파일을 서버에 업로드 시키기
+			String changeName = saveFile(reupfile, session);
+			
+			b.setOriginName(reupfile.getOriginalFilename());
+			b.setChangeName("resources/uploadFiles/" + changeName);
+		}
+		
+		/*
+		 * b에 boardTitle, boardContent
+		 * 
+		 * 1. 새로운 첨부파일 x, 기존첨부파일 x
+		 * 	  => originName : null, changeName : null 
+		 * 
+		 * 2. 새로운 첨부파일 x, 기존첨부파일 o
+		 * 	  => originName : 기존첨부파일 이름, changeName : 기존첨부파일 경로 
+		 * 
+		 * 3. 새로운 첨부파일 o, 기존첨부파일 o
+		 *    => originName : 새로운첨부파일 이름, changeName : 새로운 첨부파일 경로
+		 *    
+		 * 4. 새로운 첨부파일 o, 기존첨부파일 x
+		 * 	  => originName : 새로운첨부파일,  changeName : 새로운 첨부파일 경로
+		 */
+		
+		int result = boardService.updateBoard(b);
+		
+		
+		
+		return "board/boardUpdateForm";
 	}
 }
