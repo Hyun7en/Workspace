@@ -21,4 +21,7 @@ public interface BoardService {
 	
 	//댓글목록 조회
 	ArrayList<Reply> selectReply(int bno);
+	
+	//게시글 추가(insert)
+	int insertBoard(Board b);
 }
