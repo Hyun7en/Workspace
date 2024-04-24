@@ -27,4 +27,7 @@ public interface BoardService {
 	
 	//게시글 수정
 	int updateBoard(Board b);
+	
+	//댓글추가
+	int insertReply(Reply r);
 }

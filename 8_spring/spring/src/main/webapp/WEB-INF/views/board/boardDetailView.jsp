@@ -134,7 +134,7 @@
         <br><br>
         <script>
             $(function(){
-                getReplyList({bno : ${b.boardNo}}, function(reulst){
+                getReplyList({bno : ${b.boardNo}}, function(result){
                     // reulst = reulst.map(r => {
                     //     return {
                     //         ...r,
@@ -162,32 +162,82 @@
                     //     }
                     // }
                     // console.log(rList)
+                    
+                    setReplyCount(result.length)
+                    const list = getTdDataFormatToReply(result)
+                    
+                    
 
                     const replyBody = document.querySelector("#replyArea tbody");
-                    const list = [];
-                    for (let r of reulst) {
-                        list.push({
-                            tdData1: r.replyWriter,
-                            tdData2: r.replyContent,
-                            tdData3: r.createDate,
-                            rowEvent: function(){
-                                console.log("클릭됨")
-                            }
-                        })
-                    }
-
-                    drawTableList(reulst, replyBody);
+                    drawTableList(result, replyBody);
                 })
             })
             
+            //댓글 등록
+            function addReply(){
+                //boardNo
+                //userId
+                //댓글내용
+
+                const boardNo = ${b.boardNo};
+                const userId = "${loginUser.userId}";
+                const content = document.querySelector("#content").value;
+
+
+                addReplyAjax({
+                    refBno: boardNo,
+                    replyWriter: userId,
+                    replyContent: content
+                }, function(res){
+                    getReplyList({bno : ${b.boardNo}}, function(result){
+                        setReplyCount(result.length);
+                        drawTableList(result, document.querySelector("#replyArea tbody"));
+                    })
+                    
+                })
+            }
+
+            //댓글 데이터 포맷변경
+            function getTdDataFormatToReply(replyList){
+                const list = [];
+                for (let r of replyList) {
+                    list.push({ 
+                        tdData1: r.replyWriter,
+                        tdData2: r.replyContent,
+                        tdData3: r.createDate,
+                        rowEvent: function(){
+                            console.log("클릭됨")
+                        }
+                    })
+                }
+
+                return list;
+            }
+            //댓글 카운트 넣기
+            function setReplyCount(count){
+                const rCount = document.querySelector("#rcount");
+                rCount.innerHTML = count;
+            }
+
+            function addReplyAjax(data, callback){
+                $.ajax({
+                    url: "rinsert.bo",
+                    data : data,
+                    success : function(res){
+                        callback(res)
+                    }, error(){
+                        console.log("댓글 생성 ajax실패");
+                    }
+                })
+            }
 
             // 댓글 목록 가져오기
             function getReplyList(data, callback){
                 $.ajax({
                     url: 'rlist.bo',
                     data : data,
-                    success: function(reulst){
-                        callback(reulst)
+                    success: function(result){
+                        callback(result)
                     },
                     error: function(item){
                         console.log(item);
@@ -197,7 +247,7 @@
             }
 
             function drawTableList(itemList, parent){
-
+                $(parent).empty();
                
                 //단순하게 보여주기위한 view를 작성할때  
                 // let str = "";                

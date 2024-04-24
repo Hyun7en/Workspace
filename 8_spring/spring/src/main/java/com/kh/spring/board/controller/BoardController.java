@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -176,5 +175,13 @@ public class BoardController {
 			model.addAttribute("errorMsg", "게시글 수정 실패");
 			return "common/errorPage";
 		}
+	}
+	
+	@ResponseBody
+	@RequestMapping("rinsert.bo")
+	public String ajaxInsertReply(Reply r) {
+		//성공했을 때는 success, 실패했을 때 fail
+		
+		return boardService.insertReply(r) > 0 ? "success" : "fail";
 	}
 }
