@@ -38,5 +38,12 @@
 			</bean:bean:property>
 		 </beans:bean>
 	 -->
+	 <interceptors>
+	 	<interceptor>
+	 		<mapping path="/myPage.me"/>
+	 		<mapping path="/enrollForm.bo"/>
+	 		<beans:bean class="com.kh.spring.common.intercepter.LoginIntercepter" id="LoginIntercepter"/>
+	 	</interceptor>
+	 </interceptors>
 
 </beans:beans>
