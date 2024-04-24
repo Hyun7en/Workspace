@@ -30,4 +30,7 @@ public interface BoardService {
 	
 	//댓글추가
 	int insertReply(Reply r);
+	
+	//top5게시글 조회
+	ArrayList<Board> selectTopBoardList();
 }
