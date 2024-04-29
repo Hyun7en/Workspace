@@ -66,3 +66,30 @@ h1{
 .main #search-bar > button:hover{
     background-color: #dddddd;
 }
+
+.todo-list{
+    width: 100%;
+    margin: 12px 0px;
+    padding: 0px 30px;
+}
+
+.todo-list > li{
+    height: 34px;
+    background: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.todo-list > li > .todo-remove-btn{
+    cursor: pointer;
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 0px;
+    background-color: rgb(192, 226, 255);
+}
