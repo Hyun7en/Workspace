@@ -80,6 +80,11 @@ h1{
     align-items: center;
     justify-content: center;
     position: relative;
+    cursor: pointer;
+}
+
+.todo-list > li.done{
+    text-decoration: line-through;
 }
 
 .todo-list > li > .todo-remove-btn{
