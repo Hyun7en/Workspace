@@ -9,6 +9,7 @@ import React from 'react'
 
 //props : 부모컴포넌트에서 자식컴포넌트에 데이터를 전달하는 방식
 //        컴포넌트의 속성=값으로 전달할 수 있다.
+//        props변하면 자식요소는 리랜더링을 한다.
 const Food = (props) => {
   return (
     <div>
