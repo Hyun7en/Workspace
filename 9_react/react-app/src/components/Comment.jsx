@@ -31,6 +31,7 @@ const styles = {
         alignItems: "flex-start"
     }
 }
+
 const Comment = (props) => {
   return (
     <div style={styles.wrapper}>
