@@ -46,6 +46,11 @@ export default class CommentList extends Component {
                 })
 
             } else {
+
+                this.setState({
+                    commentList: []
+                });
+                
                 clearInterval(timer)
             }
         }, 2000)

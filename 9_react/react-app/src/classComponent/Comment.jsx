@@ -31,6 +31,10 @@ class Comment extends Component {
     console.log(`${this.props.id}의 componentDidUpdate`)
   }
 
+  componentWillUnmount(){
+    console.log(`${this.props.id}의 componentWillUnmount`)
+  }
+
   render() {
     return (
       <div style={styles.wrapper}>
