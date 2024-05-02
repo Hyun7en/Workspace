@@ -21,7 +21,7 @@ const UseStateTest = () => {
 
     const onClick1 = () => {
         // num++;
-        setNum(num + 1);
+        setNum(num + 1); // 0 => 1
         console.log("onClick1 : " + num);
     }
 

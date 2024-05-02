@@ -6,12 +6,16 @@ import CommentList from './classComponent/CommentList';
 import UseStateTest from './reactHook/UseStateTest';
 import SignUp from './sample/SignUp';
 import LandingPage from './sample/LandingPage';
+import UseEffectTest from './reactHook/UseEffectTest';
+import UseMemoTest from './reactHook/useMemo/useMemoTest';
+import UseCallbackTest2 from './reactHook/useCallback/UseCallbackTest2';
+import UseRefTest from './reactHook/UseRefTest';
 
 
 function App() {
   return (
     <div className="App">
-      <LandingPage />
+      <UseRefTest/>
     </div>
   );
 }
