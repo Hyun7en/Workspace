@@ -21,10 +21,23 @@ const dummyTodos = [{
 
 function App() {
   const [todos, setTodos] = useState([...dummyTodos]);
+  // todos => 데이터를 추가해주자 -> 
+  // setTodos -> TodoInsert내부에 input요소의 value가 필요하다.
+
+  const onInsert = (title) => {
+    const todo = {
+      id: new Date().getTime(), //key대체
+      title: title,
+      isDone: false
+    }
+   
+    setTodos(todos => todos.concat(todo))
+    //concat() : 인자로 주어진 배열이나 값들을 기존 배열에 합쳐서 새 배열을 반환
+  }
 
   return (
     <AppContainer title={"TodoList"}>
-      <TodoInsert/>
+      <TodoInsert onInsert={onInsert}/>
       <TodoListView
         todos={todos}
       />

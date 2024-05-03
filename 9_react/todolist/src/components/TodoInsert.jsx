@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaPlus } from "react-icons/fa6";
 import styled from 'styled-components';
 
@@ -27,16 +27,29 @@ const InsertBtn = styled.button`
     border-radius: 0px 50px 50px 0px;
 `
 
-const TodoInsert = () => {
-  return (
-    <InsertContainer>
-        <InsertInput 
-            placeholder='할일 입력'/>
-        <InsertBtn>
-            <FaPlus/>
-        </InsertBtn>
-    </InsertContainer>
-  )
+const TodoInsert = ({onInsert}) => {
+    const [todoTitle, setTodoTitle] = useState("");
+    
+    const onChangeTitle = (ev) => {
+        setTodoTitle(ev.target.value);
+    }
+
+    const onSubmit = (ev) => {
+        onInsert(todoTitle);
+        setTodoTitle("") // value초기화
+    }
+
+    return (
+        <InsertContainer>
+            <InsertInput 
+                value={todoTitle}     
+                placeholder='할일 입력'
+                onChange={onChangeTitle}/>
+            <InsertBtn onClick={onSubmit}>
+                <FaPlus/>
+            </InsertBtn>
+        </InsertContainer>
+    )
 }
 
 export default TodoInsert
