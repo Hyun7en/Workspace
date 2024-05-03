@@ -18,7 +18,11 @@ const TodoRow = styled.li`
     cursor: pointer;
 `
 
-const RomoveBtn = styled.button`
+const DoneRow = styled(TodoRow)`
+    text-decoration: line-through;
+`
+
+const RemoveBtn = styled.button`
     cursor: pointer;
     width: 34px;
     height: 34px;
@@ -31,18 +35,43 @@ const RomoveBtn = styled.button`
     border: none;
 `
 
-const TodoListView = ({todos}) => {
+const TodoListView = ({todos, onRemove, onToggle}) => {
 
     return (
         <ListContainer>
             {
                 todos.map(todo => 
-                        <TodoRow>
+                        todo.isDone ? 
+                        <DoneRow 
+                            key={todo.id}
+                            onClick={() => onToggle(todo.id)}
+                            >
                             {todo.title}
-                            <RomoveBtn>
+                            <RemoveBtn onClick={(ev) => {
+                                                        ev.stopPropagation() // 이벤트 확산방지
+                                                        //ev.preventDefault()// 고유동작 방지
+                                                        onRemove(todo.id)
+                                                    }
+                                                }>
                                 <FaXmark/>
-                            </RomoveBtn>
-                        </TodoRow>)
+                            </RemoveBtn>
+                        </DoneRow> :
+                        <TodoRow 
+                            key={todo.id}
+                            onClick={() => onToggle(todo.id)}
+                            >
+                            {todo.title}
+                            <RemoveBtn onClick={(ev) => {
+                                                        ev.stopPropagation() // 이벤트 확산방지
+                                                        //ev.preventDefault()// 고유동작 방지
+                                                        onRemove(todo.id)
+                                                    }
+                                                }>
+                                <FaXmark/>
+                            </RemoveBtn>
+                        </TodoRow>
+                        
+                    )
             }
         </ListContainer>
     )
