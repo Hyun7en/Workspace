@@ -116,3 +116,6 @@ replay_pid*
 
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse,visualstudiocode
 *.env
+8_spring/openData/target/
+*.classpath
+*.project
