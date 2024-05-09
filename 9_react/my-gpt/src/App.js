@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import styled from 'styled-components';
 import { DescriptText, Title } from './components/CommonsStyles';
@@ -10,7 +10,8 @@ import ChatDisplay from './components/ChatDisplay';
 function App() {
   //프롬프트창에 입력되는 text데이터
   const [searchText, setSearchText] = useState('');
-  const [chatDataList, setChatDataList] = useState([]);
+  const [chatDataList, setChatDataList] = useState(localStorage.getItem("chatList") ? 
+                                                    JSON.parse(localStorage.getItem("chatList")) : []);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -36,13 +37,19 @@ function App() {
         ...chatDataList,
         chatData
       ])
-      console.log(chatData)
+ 
     } catch(error){
       console.log(error)
     } finally{
       setIsLoading(false);
     }
   }
+
+  //chatDataList의 값이 변경되면 localStorage에 저장해줘
+  useEffect(() => {
+    //localStorage에 저장할 수 있는 양식은 오직 string
+    localStorage.setItem("chatList", JSON.stringify(chatDataList));
+  },[chatDataList])
 
   return (
     <AppContainer>

@@ -21,21 +21,23 @@ const ChatDisplay = ({chatDataList, isLoading}) => {
                             {chat.question}
                         </Card>
                     </Space>
-                    <Space>
-                        <Card
-                            style={{
-                                width:400,
-                            }}
-                            bodyStyle={{
-                                padding: "12px"
-                            }}>
-                            {chat.message}
-                        </Card>
-                        <Avatar 
-                            size={40} 
-                            src={"https://www.irobotnews.com/news/photo/201803/13262_31414_3740.png"}
-                        />
-                    </Space>
+                    <RqeustArea>
+                        <Space>
+                            <Card
+                                style={{
+                                    width:400,
+                                }}
+                                bodyStyle={{
+                                    padding: "12px"
+                                }}>
+                                {chat.message}
+                            </Card>
+                            <Avatar 
+                                size={40} 
+                                src={"https://www.irobotnews.com/news/photo/201803/13262_31414_3740.png"}
+                            />
+                        </Space>
+                    </RqeustArea>
                 </div>
             ))
         }
