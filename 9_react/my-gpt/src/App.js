@@ -5,19 +5,43 @@ import styled from 'styled-components';
 import { DescriptText, Title } from './components/CommonsStyles';
 import SearchBar from './components/SearchBar';
 import { CallGpt } from './service/gpt';
+import ChatDisplay from './components/ChatDisplay';
 
 function App() {
   //프롬프트창에 입력되는 text데이터
   const [searchText, setSearchText] = useState('');
+  const [chatDataList, setChatDataList] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleChangeSearchText = (ev) => {
     setSearchText(ev.target.value)
   }
 
-  const handleClickSearchIcon = () => {
+  const handleClickSearchIcon = async () => {
+    const chatData = {
+      date : new Date(),
+      question: searchText
+    }
     
-    CallGpt({
-      prompt : searchText
-    })
+    try{
+      setIsLoading(true);
+      const message = await CallGpt({
+        prompt : searchText
+      })
+
+      chatData.message = message;
+
+      setChatDataList([
+        ...chatDataList,
+        chatData
+      ])
+      console.log(chatData)
+    } catch(error){
+      console.log(error)
+    } finally{
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -26,7 +50,10 @@ function App() {
         <Title>나만의 GPT</Title>
       </Header>
       <Contents>
-
+        <ChatDisplay 
+          chatDataList = {chatDataList}
+          isLoading = {isLoading}
+        />
       </Contents>
       <Footer>
         <SearchBar 

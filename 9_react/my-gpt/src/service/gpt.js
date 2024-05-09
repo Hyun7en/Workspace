@@ -58,13 +58,17 @@ export const CallGpt = async ({prompt}) => {
             "messages": [
               {
                 "role": "system",
-                "content": "You are a 10-year coding instructor and need to answer a question for non-coders. Use a friendly tone of voice. Summarize the question in 3 lines and add a detailed answer below. If you do a good job, I'll give you a $20 tip."
+                "content": `You are a 10-year coding instructor and need to answer a question for non-coders. 
+                Use a friendly tone of voice. 
+                Summarize the question in 3 lines and add a detailed answer below. 
+                If you do a good job, I'll give you a $20 tip.
+                Please answer in Korean`
               },{
                 "role": "user",
                 "content" : prompt
               }
             ],
-            "temperature": 0.7,
+            "temperature": 1,
             "max_tokens": 1002,
             "top_p": 1,
             "frequency_penalty": 0,
@@ -75,5 +79,5 @@ export const CallGpt = async ({prompt}) => {
     const responseDate = await response.json();
 
     const message = responseDate.choices[0].message.content;
-    console.log(message)
+    return message;
 }
