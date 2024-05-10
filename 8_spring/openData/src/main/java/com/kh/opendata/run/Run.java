@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -52,5 +53,16 @@ public class Run {
 		JsonObject responseObj = totalObj.getAsJsonObject("response");
 		JsonObject bodyObj = responseObj.getAsJsonObject("body");
 		System.out.println(bodyObj);
+		
+		int totalCount = bodyObj.get("totalCount").getAsInt();
+		JsonArray itemArr = bodyObj.getAsJsonArray("items");
+		System.out.println(itemArr);
+	
+		for(int i = 0; i < itemArr.size(); i++) {
+			JsonObject item = itemArr.get(i).getAsJsonObject(); // i번째 구의 미세먼지정보를 가진 json객체
+			System.out.println("측정소명 : " + item.get("stationName").getAsString());
+			System.out.println("측정일시 : " + item.get("dataTime").getAsString());
+			System.out.println("미세먼지농도 : " + item.get("pm10Value").getAsString());
+		}
 	}
 }
