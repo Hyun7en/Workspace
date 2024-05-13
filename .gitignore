@@ -120,3 +120,4 @@ replay_pid*
 *.classpath
 *.project
 8_spring/summernote/
+8_spring/spring/target/
