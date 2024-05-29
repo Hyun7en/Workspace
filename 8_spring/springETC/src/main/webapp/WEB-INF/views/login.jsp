@@ -7,11 +7,16 @@
 <title>Insert title here</title>
 </head>
 <body>
+<h1>로그인</h1>
+<form action="login" method="post">
+	<input type="text" name="nick">
+	<input type="submit" value="로그인">
+</form>
 <a id="naverLoginLink">네이버로그인</a>
 <script>
     //네이버로그인설정
     window.onload = function(){
-        const clientId = "clientId입력";
+        const clientId = "m1hCzwCK66Nrt_XkxJfr";
         //리다이렉트 URI를 utf-8로 인코딩해서 저장
         const redirectURI = encodeURIComponent("http://localhost:8899/etc/naver-login");
 
