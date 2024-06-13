@@ -91,7 +91,7 @@
         <div id="header_1">
             <div id="header_1_left">
                 <img src="https://www.iei.or.kr/resources/images/common/top_logo_s.jpg" alt="" onclick="location.href='${ pageContext.servletContext.contextPath }';">
-            </div>
+            </div> 
             <div id="header_1_center"></div>
             <div id="header_1_right">
 	            <c:choose>

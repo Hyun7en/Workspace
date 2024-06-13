@@ -14,20 +14,36 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 public class LoginController {
+	
+	@Value("${admin.name}")
+	private String name;
 	
 	@RequestMapping("login")
 	public String login(HttpSession session, String nick) {
 		//로그인할때 정보를 받아서 세션에 저장하고 chat창으로 보냄
 		session.setAttribute("nick", nick);
 		return "chat";
+	}
+	
+	@RequestMapping("nametest")
+	public String nametest() { 
+		//로그인할때 정보를 받아서 세션에 저장하고 chat창으로 보냄
+		System.out.println(name);
+		log.info("{}",name);
+		System.out.println("????----------------------------");
+		return "redirect:/";
 	}
 
 	@RequestMapping("/naver-login")

@@ -29,8 +29,15 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 public class BoardController {
 	
-	@Autowired 
-	private BoardService boardService;
+//	@Autowired 
+//	private BoardService boardService;
+	
+	private final BoardService boardService;
+	
+	@Autowired
+	public BoardController(BoardService boardService) {
+		this.boardService = boardService;
+	}
 	
 //	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	

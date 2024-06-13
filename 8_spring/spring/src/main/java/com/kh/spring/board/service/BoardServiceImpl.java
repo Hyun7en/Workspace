@@ -11,14 +11,17 @@ import com.kh.spring.board.model.vo.Board;
 import com.kh.spring.board.model.vo.Reply;
 import com.kh.spring.common.model.vo.PageInfo;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService{
 
 	@Autowired
-	private SqlSessionTemplate sqlSession;
+	private final SqlSessionTemplate sqlSession;
 	
 	@Autowired
-	private BoardDao boardDao;
+	private final BoardDao boardDao;
 	
 	@Override
 	public int selectListCount() {

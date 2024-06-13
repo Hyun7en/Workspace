@@ -10,6 +10,8 @@ import com.kh.spring.board.model.vo.Board;
 import com.kh.spring.board.model.vo.Reply;
 import com.kh.spring.common.model.vo.PageInfo;
 
+import lombok.RequiredArgsConstructor;
+
 @Repository
 public class BoardDao {
 

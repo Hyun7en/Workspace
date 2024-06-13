@@ -17,12 +17,13 @@ import com.google.gson.JsonParser;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+
 //spring의 컴포넌트로 등록
-@Component
+@Slf4j
+@Component 
 public class ChatServer extends TextWebSocketHandler{
 	
-	private final Map<String, WebSocketSession> userSessions = new ConcurrentHashMap<>();
+	private final Map<String, WebSocketSession> userSessions = new ConcurrentHashMap<String, WebSocketSession>();
 
 	//클라이언트가 연결을 맺을 때 호출되는 메소드
 	@Override
