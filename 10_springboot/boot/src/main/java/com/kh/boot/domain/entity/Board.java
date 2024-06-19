@@ -12,10 +12,7 @@ package com.kh.boot.domain.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -24,6 +21,7 @@ import java.time.LocalDateTime;
 @Table(name = "BOARD")
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 @AllArgsConstructor
 @Data
 public class Board {
@@ -55,4 +53,28 @@ public class Board {
     @UpdateTimestamp // 엔티티가 업데이트될 때마다 타임스탬프를 자동으로 갱신
     @Column
     private LocalDateTime updateAt;
+
+//    private Board(){}
+//
+//    public static Builder bulider(){
+//        return new Builder();
+//    }
+//
+//    public static class Builder{
+//        private Board board = new Board();
+//
+//        public Builder setBoardId(String userid){
+//            this.board.setUserId(userid);
+//            return this;
+//        }
+//
+//        public Builder setBoardPwd(String pwd){
+//            this.board.setPwd(pwd);
+//            return this;
+//        }
+//
+//        public Board build(){
+//            return board;
+//        }
+//    }
 }
